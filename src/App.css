@@ -1,0 +1,322 @@
+/* Base variables */
+:root {
+  --common-font-size: 1.8vw;
+}
+
+/* Layout containers */
+.App {
+  background-image: url("background.jpeg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.content-container {
+  max-height: 95vh; /* Reduced slightly */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  padding-top: 1vh;
+  padding-bottom: 5vh;
+}
+
+.content-window {
+  display: flex;
+  flex-direction: column;
+  padding: 0.3vw;
+  padding-top: 0.2vw;
+  flex: 1;
+  min-height: 0;
+}
+
+.responsive-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Text content */
+.monospace {
+  font-family: "Courier New", monospace;
+  /* Prioritize height-based scaling with a reasonable minimum */
+  font-size: max(min(1.8vh, 16px), 12px);
+  line-height: 1.4;
+  text-align: left;
+  color: #f0f0f0;
+  font-weight: bold;
+  padding: 0.3vh 0.3vw;
+  white-space: pre-wrap;
+  overflow: hidden;
+  max-height: 90vh;
+  width: 98%;
+  margin: 0 auto;
+  transition: opacity 0.3s ease-in-out, font-size 0.3s ease-out;
+}
+
+.content-window.transitioning .monospace {
+  opacity: 0.6;
+}
+
+.stanza {
+  margin-bottom: 1rem;
+}
+
+/* Interactive elements */
+.poem-text {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.poem-text:hover {
+  color: rgba(234, 85, 93, 0.9);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+.code {
+  transition: all 0.2s ease;
+}
+
+.code:hover {
+  color: rgb(234, 85, 93);
+  text-shadow: 0 0 8px rgba(234, 85, 93, 0.2);
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
+
+.selected-code,
+.highlighted-line {
+  font-size: 1.2em;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.selected-code {
+  color: rgb(188, 55, 55);
+}
+
+.highlighted-line {
+  color: rgb(234, 85, 93);
+}
+
+/* Info bubble */
+.info-bubble {
+  position: absolute;
+  display: none;
+  border-radius: 10px;
+  z-index: 4;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #000;
+  overflow: hidden;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: scale(0.95);
+  box-sizing: border-box;
+}
+
+/* Airport-specific bubble */
+.airport-info-window {
+  width: 200px !important;
+  height: 200px !important;
+  padding: 0;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.airport-info-window .info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 8px;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  backdrop-filter: blur(2px);
+  color: #0d0202;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Line data-specific bubble */
+.line-data-window {
+  width: 220px;
+  height: 280px;
+  padding: 12px;
+}
+
+.info-bubble.show-info {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Credits containers */
+.author-container,
+.photographer-container {
+  position: fixed;
+  bottom: 1vh;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
+  z-index: 10;
+}
+
+.author-container {
+  left: 1vw;
+}
+
+.photographer-container {
+  right: 1vw;
+}
+
+/* CTA Button */
+.cta-container {
+  position: fixed;
+  left: 50%;
+  bottom: 1vh;
+  transform: translateX(-50%);
+  width: 220;
+  length: 220;
+  text-align: center;
+  z-index: 10;
+}
+
+.cta-button {
+  background-color: rgba(0, 123, 255, 0.8);
+  color: white;
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover {
+  background-color: rgba(0, 123, 255, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.9;
+}
+
+.cta-button:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* Line data window */
+.line-data-window-custom {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  padding: 0.8rem;
+  border-radius: 5px !important;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.line-data-window-custom .itinerary,
+.line-data-window-custom .length,
+.line-data-window-custom .carbon-footprint {
+  margin: 0;
+  padding: 0.3rem 0;
+  text-align: center;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+/* Airport info specific styling */
+.airport-info-window {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.airport-info-window .info {
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+/* Media queries */
+@media screen and (min-aspect-ratio: 16/9) {
+  .monospace {
+    font-size: min(1.8vh, 1.8vw, 20px);
+    line-height: 1.3;
+    width: 95%;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .monospace {
+    font-size: min(1.8vh, 1.8vw, 18px);
+    line-height: 1.25;
+    max-height: calc(93vh - 4vh);
+  }
+
+  .content-container {
+    padding-bottom: 4vh;
+  }
+}
+
+.info-bubble {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center bottom;
+}
+
+.info-bubble.show-info {
+  transform: scale(1) translateY(0);
+}
+
+.monospace ::selection {
+  background: rgba(234, 85, 93, 0.3);
+  color: #ffffff;
+}
+
+.author-container,
+.photographer-container {
+  transition: all 0.2s ease;
+}
+
+.author-container:hover,
+.photographer-container:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.poem-text:focus,
+.code:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(234, 85, 93, 0.4);
+  border-radius: 2px;
+}

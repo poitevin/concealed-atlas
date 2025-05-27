@@ -112,19 +112,20 @@
   }
   
   .content-window {
-    /* Match top margin to left margin - minimal */
-    padding-top: clamp(6px, 1.5vh, 12px);
+    /* Reduce margins uniformly to give more text space */
+    padding-top: clamp(4px, 1vh, 8px);
     padding-bottom: clamp(60px, 10vh, 80px);
-    padding-left: clamp(8px, 2vw, 16px);
-    padding-right: clamp(8px, 2vw, 16px);
+    padding-left: clamp(6px, 1.5vw, 12px);
+    padding-right: clamp(6px, 1.5vw, 12px);
   }
   
   .monospace {
     /* Radically smaller font for mobile */
     font-size: clamp(8px, 1.4vh, 10px);
-    line-height: 1.2;
-    /* Minimal mobile padding */
-    padding: clamp(2px, 0.5vh, 4px) clamp(2px, 0.5vw, 4px);
+    /* Increase line-height to use vertical space better */
+    line-height: 1.3;
+    /* Reduce internal padding to maximize text width */
+    padding: clamp(1px, 0.3vh, 2px) clamp(1px, 0.3vw, 2px);
     /* Light text shadow */
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
     /* Ensure full width usage and better wrapping */
@@ -136,8 +137,8 @@
   }
   
   .stanza {
-    /* Very tight stanza spacing on mobile */
-    margin-bottom: clamp(4px, 0.8vh, 8px);
+    /* Increase stanza spacing to use vertical space better */
+    margin-bottom: clamp(6px, 1.2vh, 12px);
   }
   
   /* Move credits higher to avoid overlap */
@@ -421,23 +422,26 @@
 /* Ensure no text overflow on very small screens */
 @media screen and (max-width: 320px) {
   .content-window {
-    padding-top: clamp(4px, 1vh, 8px);
+    /* Further reduce margins for tiny screens */
+    padding-top: clamp(3px, 0.8vh, 6px);
     padding-bottom: clamp(50px, 12vh, 70px);
-    padding-left: clamp(6px, 1.5vw, 10px);
-    padding-right: clamp(6px, 1.5vw, 10px);
+    padding-left: clamp(4px, 1vw, 8px);
+    padding-right: clamp(4px, 1vw, 8px);
   }
   
   .monospace {
     /* Ultra-small font for tiny screens */
     font-size: clamp(7px, 1.2vh, 9px);
-    line-height: 1.15;
-    padding: clamp(1px, 0.3vh, 2px) clamp(1px, 0.3vw, 2px);
+    /* Better line spacing for readability */
+    line-height: 1.25;
+    padding: clamp(1px, 0.2vh, 2px) clamp(1px, 0.2vw, 2px);
     word-break: break-word;
     overflow-wrap: break-word;
   }
   
   .stanza {
-    margin-bottom: clamp(3px, 0.6vh, 6px);
+    /* Use available vertical space */
+    margin-bottom: clamp(4px, 0.8vh, 8px);
   }
   
   .author-container,

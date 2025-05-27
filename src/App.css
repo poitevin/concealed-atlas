@@ -120,8 +120,8 @@
   }
   
   .monospace {
-    /* Even smaller font to handle long airport code lines */
-    font-size: clamp(6px, 1.2vh, 8px);
+    /* Return to larger, more readable font */
+    font-size: clamp(7px, 1.3vh, 9px);
     /* Increase line-height to use vertical space better */
     line-height: 1.3;
     /* Minimal internal padding to maximize text width */
@@ -134,9 +134,8 @@
     box-sizing: border-box;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    hyphens: auto; /* Allow hyphenation for long words */
-    /* Allow breaking at hyphens in airport codes */
-    word-break: break-all;
+    hyphens: auto; /* Allow hyphenation for poem words */
+    /* Remove aggressive breaking - let airport codes overflow if needed */
   }
   
   .stanza {
@@ -360,13 +359,14 @@
   }
   
   .monospace {
-    /* Ultra-small for landscape */
+    /* Return to readable landscape font */
     font-size: clamp(6px, 1.2vh, 8px);
     line-height: 1.15;
     padding: clamp(1px, 0.2vh, 2px) clamp(1px, 0.2vw, 2px);
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
+    /* Let airport codes overflow naturally */
   }
   
   .stanza {
@@ -434,12 +434,12 @@
   }
   
   .monospace {
-    /* Ultra-small font for tiny screens */
+    /* Return to readable font size for tiny screens */
     font-size: clamp(6px, 1.1vh, 8px);
     /* Better line spacing for readability */
     line-height: 1.25;
     padding: clamp(1px, 0.2vh, 2px) clamp(1px, 0.2vw, 2px);
-    word-break: break-word;
+    word-break: break-word; /* Normal word breaking for poem */
     overflow-wrap: break-word;
     hyphens: auto;
   }

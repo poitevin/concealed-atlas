@@ -157,15 +157,18 @@
     margin-bottom: clamp(5px, 1vh, 10px); /* Options: 3-6px (tight), 5-10px (current), 8-15px (loose) */
   }
   
-  /* Combined credits for mobile - left corner, aligned with CTA height */
+  /* Combined credits for mobile - left corner, two-line layout */
   .credits-container {
     left: clamp(4px, 1vw, 8px) !important; /* Left corner, match content padding */
     transform: none; /* Remove centering transform */
     bottom: clamp(8px, 1.5vh, 16px); /* Match CTA button height exactly */
     text-align: left; /* Left-aligned text */
-    font-size: clamp(6px, 1vh, 8px); /* Smaller font for mobile */
-    padding: clamp(2px, 0.3vh, 3px) clamp(3px, 0.6vw, 5px); /* Reduced padding */
+    font-size: clamp(6px, 1vh, 8px); /* Readable font for mobile */
+    line-height: 1.15; /* Tight line spacing for mobile */
+    padding: clamp(3px, 0.5vh, 5px) clamp(4px, 0.8vw, 6px); /* Padding for two lines */
     max-width: calc(50vw - 16px); /* Prevent overlap with CTA */
+    white-space: normal; /* Allow wrapping to two lines */
+    overflow: visible; /* Show both lines */
   }
   
   .cta-container {
@@ -318,16 +321,16 @@
   bottom: clamp(8px, 1.5vh, 16px); /* Match CTA button height exactly */
   text-align: left;
   z-index: 10;
-  padding: clamp(3px, 0.6vh, 6px) clamp(6px, 1.2vw, 12px); /* Reduced padding */
-  font-size: clamp(8px, 0.7rem, 11px); /* Smaller font size */
+  padding: clamp(4px, 0.8vh, 8px) clamp(6px, 1.2vw, 12px); /* Increased padding for two lines */
+  font-size: clamp(8px, 0.7rem, 11px); /* Keep readable font size */
+  line-height: 1.2; /* Tight line spacing for two lines */
   color: #000;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 3px;
   transition: all 0.2s ease;
   max-width: calc(50vw - 32px); /* Limit width to prevent overlap */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal; /* Allow wrapping to two lines */
+  overflow: visible; /* Show both lines */
 }
 
 .credits-container:hover {
@@ -392,19 +395,20 @@
     margin-bottom: clamp(2px, 0.5vh, 4px);
   }
 
-  /* Combined credits for landscape mobile - left corner, CTA on right */
+  /* Combined credits for landscape mobile - left corner, aligned with CTA height */
   .credits-container {
     left: clamp(4px, 1vw, 8px) !important; /* Left corner, match content padding */
     transform: none; /* Remove centering transform */
-    bottom: clamp(15px, 2.5vh, 20px); /* Reasonable height */
+    bottom: clamp(8px, 1.5vh, 12px); /* Match CTA button height exactly */
     text-align: left; /* Left-aligned text */
-    font-size: clamp(5px, 1.1vh, 7px);
-    padding: clamp(1px, 0.2vh, 2px) clamp(2px, 0.4vw, 3px);
+    font-size: clamp(4px, 0.9vh, 6px); /* Smaller font for landscape mobile */
+    padding: clamp(1px, 0.15vh, 2px) clamp(2px, 0.3vw, 3px); /* Very reduced padding */
+    max-width: calc(50vw - 16px); /* Prevent overlap with CTA */
   }
   
   .cta-container {
     right: clamp(4px, 1vw, 8px); /* Right corner, match content padding */
-    bottom: clamp(15px, 2.5vh, 20px); /* Same height as credits */
+    bottom: clamp(8px, 1.5vh, 12px); /* Exact same height as credits */
   }
   
   .cta-button {
@@ -478,18 +482,19 @@
     margin-bottom: clamp(3px, 0.6vh, 6px);
   }
   
-  /* Combined credits for very small screens - left corner, CTA on right */
+  /* Combined credits for very small screens - left corner, aligned with CTA height */
   .credits-container {
     left: clamp(3px, 0.8vw, 6px) !important; /* Left corner, match content padding */
     transform: none; /* Remove centering transform */
-    bottom: clamp(15px, 2.5vh, 20px); /* Reasonable height */
+    bottom: clamp(8px, 1.5vh, 12px); /* Match CTA button height exactly */
     text-align: left; /* Left-aligned text */
-    font-size: clamp(6px, 1vh, 8px);
-    padding: clamp(1px, 0.3vh, 3px) clamp(3px, 0.6vw, 5px);
+    font-size: clamp(5px, 0.8vh, 7px); /* Smaller font for tiny screens */
+    padding: clamp(1px, 0.2vh, 2px) clamp(2px, 0.4vw, 3px); /* Very reduced padding */
+    max-width: calc(50vw - 12px); /* Prevent overlap with CTA */
   }
   
   .cta-container {
     right: clamp(3px, 0.8vw, 6px); /* Right corner, match content padding */
-    bottom: clamp(15px, 2.5vh, 20px); /* Same height as credits */
+    bottom: clamp(8px, 1.5vh, 12px); /* Exact same height as credits */
   }
 }

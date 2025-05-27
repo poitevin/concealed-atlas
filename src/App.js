@@ -156,7 +156,6 @@ const App = () => {
   }, [selectedLineData]);
 
   const handleLineClick = (event, globalLineIndex) => {
-    // Stop event propagation to prevent it from bubbling up
     event.stopPropagation();
 
     if (linesData[globalLineIndex]) {
@@ -168,7 +167,6 @@ const App = () => {
   };
 
   const handleClick = (event) => {
-    // Only handle clicks on the poem text
     if (event.target.classList.contains("poem-text")) {
       const lineElement = event.target.closest(".poem-line");
       if (lineElement) {
@@ -177,7 +175,6 @@ const App = () => {
       }
     }
 
-    // Handle airport code clicks
     const codeTarget = event.target.closest(".code");
     if (codeTarget) {
       const tappedCode = codeTarget.textContent;
@@ -192,12 +189,10 @@ const App = () => {
       return;
     }
 
-    // If clicking outside of specific interactive elements, handle view toggling
     if (!event.target.closest(".info-bubble")) {
       if (!selectedAirport && !selectedLineData) {
         setDisplayPoem(!displayPoem);
       } else {
-        // Clear selections
         setSelectedAirport(null);
         setSelectedLineData(null);
         setSelectedCode(null);

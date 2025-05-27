@@ -59,7 +59,8 @@ This piece continues a lineage of **Oulipian poetics**, **systems art**, and **e
 ## License
 
 © Pedro Poitevin. All rights reserved.  
-Exhibition inquiries welcome. Please contact [pedro.poitevin@gmail.com].
+Exhibition and educational use permitted by arrangement.
+Please contact [pedro.poitevin@gmail.com].
 
 ---
 

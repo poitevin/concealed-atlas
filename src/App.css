@@ -17,58 +17,101 @@
 }
 
 .content-container {
-  max-height: 95vh; /* Reduced slightly */
+  height: 100vh;
+  max-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   padding: 0;
   position: relative;
-  padding-top: 1vh;
-  padding-bottom: 5vh;
 }
 
 .content-window {
   display: flex;
   flex-direction: column;
-  padding: 0.3vw;
-  padding-top: 0.2vw;
+  padding: clamp(4px, 0.5vh, 8px) clamp(8px, 1vw, 20px);
   flex: 1;
   min-height: 0;
+  height: 100%;
 }
 
 .responsive-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   flex: 1;
   min-height: 0;
+  height: 100%;
 }
 
-/* Text content */
+/* Text content - Responsive scaling */
 .monospace {
   font-family: "Courier New", monospace;
-  /* Prioritize height-based scaling with a reasonable minimum */
-  font-size: max(min(1.8vh, 16px), 12px);
-  line-height: 1.4;
+  /* Balanced responsive font sizing */
+  font-size: clamp(11px, 1.6vh, 16px);
+  line-height: clamp(1.25, 1.4, 1.5);
   text-align: left;
-  color: #f0f0f0;
+  color: #ffffff;
   font-weight: bold;
-  padding: 0.3vh 0.3vw;
+  opacity: 1;
+  /* Add subtle text shadow for better contrast against background */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7), 0 0 5px rgba(0, 0, 0, 0.3);
+  /* Mobile-first padding, more generous on desktop */
+  padding: clamp(4px, 1vh, 12px) clamp(8px, 2vw, 24px);
   white-space: pre-wrap;
   overflow: hidden;
-  max-height: 90vh;
-  width: 98%;
-  margin: 0 auto;
+  height: 100%;
+  max-height: 100%;
+  width: 100%;
+  margin: 0;
   transition: opacity 0.3s ease-in-out, font-size 0.3s ease-out;
 }
 
+/* Desktop-specific improvements */
+@media screen and (min-width: 768px) {
+  .monospace {
+    /* Larger margins for desktop breathing room */
+    padding-left: clamp(24px, 4vw, 60px);
+    padding-top: clamp(12px, 2vh, 30px);
+    /* Slightly larger font on desktop */
+    font-size: clamp(14px, 1.8vh, 18px);
+  }
+
+  .content-container {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+/* Tablet adjustments */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  .monospace {
+    font-size: clamp(12px, 1.7vh, 16px);
+    padding-left: clamp(16px, 3vw, 40px);
+    padding-top: clamp(8px, 1.5vh, 20px);
+  }
+}
+
+/* Mobile-specific optimizations */
+@media screen and (max-width: 480px) {
+  .monospace {
+    font-size: clamp(10px, 1.5vh, 14px);
+    line-height: 1.3;
+    padding: clamp(4px, 0.8vh, 8px) clamp(6px, 1.5vw, 12px);
+  }
+
+  .content-container {
+    padding-bottom: 15vh; /* Extra space for mobile UI */
+  }
+}
+
 .content-window.transitioning .monospace {
-  opacity: 0.6;
+  opacity: 1; /* Keep text visible during transitions */
 }
 
 .stanza {
-  margin-bottom: 1rem;
+  margin-bottom: clamp(8px, 1.2vh, 18px);
 }
 
 /* Interactive elements */
@@ -84,31 +127,31 @@
 
 .code {
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .code:hover {
   color: rgb(234, 85, 93);
   text-shadow: 0 0 8px rgba(234, 85, 93, 0.2);
   transform: scale(1.05);
-  transition: all 0.2s ease;
 }
 
 .selected-code,
 .highlighted-line {
-  font-size: 1.2em;
+  font-size: 1.1em;
   transition: color 0.3s;
   cursor: pointer;
 }
 
 .selected-code {
-  color: rgb(188, 55, 55);
+  color: rgb(255, 100, 100); /* Brighter red */
 }
 
 .highlighted-line {
-  color: rgb(234, 85, 93);
+  color: rgb(255, 120, 130); /* Brighter highlighted color */
 }
 
-/* Info bubble */
+/* Info bubble - Responsive sizing */
 .info-bubble {
   position: absolute;
   display: none;
@@ -118,36 +161,43 @@
   color: #000;
   overflow: hidden;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: clamp(11px, 0.85rem, 14px);
   line-height: 1.3;
   border: 1px solid rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
   transform: scale(0.95);
+  transform-origin: center bottom;
   box-sizing: border-box;
+}
+
+.info-bubble.show-info {
+  opacity: 1;
+  transform: scale(1) translateY(0);
 }
 
 /* Airport-specific bubble */
 .airport-info-window {
-  width: 200px !important;
-  height: 200px !important;
+  width: clamp(180px, 25vw, 200px) !important;
+  height: clamp(180px, 25vw, 200px) !important;
   padding: 0;
   background-size: cover;
   background-position: center;
   border-radius: 10px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .airport-info-window .info {
-  position: absolute;
-  bottom: 0;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.3);
-  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: clamp(6px, 1vh, 10px);
   text-align: center;
-  font-size: 0.85rem;
+  font-size: clamp(11px, 0.85rem, 14px);
   line-height: 1.3;
   backdrop-filter: blur(2px);
   color: #0d0202;
@@ -156,91 +206,21 @@
 
 /* Line data-specific bubble */
 .line-data-window {
-  width: 220px;
-  height: 280px;
-  padding: 12px;
+  width: clamp(200px, 30vw, 240px);
+  min-height: clamp(200px, 35vh, 300px);
+  padding: clamp(10px, 1.5vh, 16px);
 }
 
-.info-bubble.show-info {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Credits containers */
-.author-container,
-.photographer-container {
-  position: fixed;
-  bottom: 1vh;
-  padding: 0.5rem;
-  font-size: 0.8rem;
-  color: #000;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 3px;
-  z-index: 10;
-}
-
-.author-container {
-  left: 1vw;
-}
-
-.photographer-container {
-  right: 1vw;
-}
-
-/* CTA Button */
-.cta-container {
-  position: fixed;
-  left: 50%;
-  bottom: 1vh;
-  transform: translateX(-50%);
-  width: 220;
-  length: 220;
-  text-align: center;
-  z-index: 10;
-}
-
-.cta-button {
-  background-color: rgba(0, 123, 255, 0.8);
-  color: white;
-  font-size: 0.9rem;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.cta-button:hover {
-  background-color: rgba(0, 123, 255, 0.9);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.cta-button {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0.9;
-}
-
-.cta-button:hover {
-  opacity: 1;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-}
-
-/* Line data window */
 .line-data-window-custom {
-  background-color: rgba(255, 255, 255, 0.7) !important;
-  padding: 0.8rem;
-  border-radius: 5px !important;
-  font-size: 0.8rem;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 10px !important;
+  font-size: clamp(10px, 0.8rem, 13px);
   line-height: 1.3;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
+  gap: clamp(6px, 1vh, 12px);
   box-sizing: border-box;
   height: 100%;
 }
@@ -249,63 +229,32 @@
 .line-data-window-custom .length,
 .line-data-window-custom .carbon-footprint {
   margin: 0;
-  padding: 0.3rem 0;
+  padding: clamp(3px, 0.5vh, 6px) 0;
   text-align: center;
   word-break: break-word;
   max-width: 100%;
 }
 
-/* Airport info specific styling */
-.airport-info-window {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.airport-info-window .info {
-  font-size: 0.85rem;
-  line-height: 1.3;
-}
-
-/* Media queries */
-@media screen and (min-aspect-ratio: 16/9) {
-  .monospace {
-    font-size: min(1.8vh, 1.8vw, 20px);
-    line-height: 1.3;
-    width: 95%;
-  }
-}
-
-@media screen and (max-height: 600px) {
-  .monospace {
-    font-size: min(1.8vh, 1.8vw, 18px);
-    line-height: 1.25;
-    max-height: calc(93vh - 4vh);
-  }
-
-  .content-container {
-    padding-bottom: 4vh;
-  }
-}
-
-.info-bubble {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: center bottom;
-}
-
-.info-bubble.show-info {
-  transform: scale(1) translateY(0);
-}
-
-.monospace ::selection {
-  background: rgba(234, 85, 93, 0.3);
-  color: #ffffff;
-}
-
+/* Credits containers - Responsive positioning */
 .author-container,
 .photographer-container {
+  position: fixed;
+  bottom: clamp(8px, 1.5vh, 16px);
+  padding: clamp(4px, 0.8vh, 8px) clamp(6px, 1.2vw, 12px);
+  font-size: clamp(10px, 0.8rem, 13px);
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
+  z-index: 10;
   transition: all 0.2s ease;
+}
+
+.author-container {
+  left: clamp(8px, 1.5vw, 16px);
+}
+
+.photographer-container {
+  right: clamp(8px, 1.5vw, 16px);
 }
 
 .author-container:hover,
@@ -314,9 +263,85 @@
   transform: translateY(-1px);
 }
 
+/* CTA Button - Responsive sizing */
+.cta-container {
+  position: fixed;
+  left: 50%;
+  bottom: clamp(8px, 1.5vh, 16px);
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.cta-button {
+  background-color: rgba(0, 123, 255, 0.8);
+  color: white;
+  font-size: clamp(11px, 0.9rem, 14px);
+  padding: clamp(5px, 0.8vh, 8px) clamp(10px, 2vw, 16px);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  opacity: 0.9;
+}
+
+.cta-button:hover {
+  background-color: rgba(0, 123, 255, 0.9);
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* Landscape mobile adjustments */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .monospace {
+    font-size: clamp(9px, 1.4vh, 12px);
+    line-height: 1.2;
+    padding: clamp(2px, 0.5vh, 6px) clamp(4px, 1vw, 8px);
+  }
+
+  .stanza {
+    margin-bottom: clamp(4px, 0.8vh, 8px);
+  }
+
+  .content-container {
+    padding-bottom: clamp(50px, 12vh, 80px);
+  }
+
+  .author-container,
+  .photographer-container,
+  .cta-container {
+    bottom: clamp(4px, 1vh, 8px);
+  }
+}
+
+/* High DPI display optimizations */
+@media screen and (min-resolution: 2dppx) {
+  .monospace {
+    font-weight: bold; /* Keep bold for better readability */
+    color: #ffffff; /* Ensure bright white on high-DPI */
+  }
+}
+
+/* Selection and focus states */
+.monospace ::selection {
+  background: rgba(234, 85, 93, 0.3);
+  color: #ffffff;
+}
+
 .poem-text:focus,
 .code:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(234, 85, 93, 0.4);
   border-radius: 2px;
+}
+
+/* Ensure no text overflow on very small screens */
+@media screen and (max-width: 320px) {
+  .monospace {
+    font-size: clamp(9px, 1.3vh, 11px);
+    word-break: break-word;
+  }
 }

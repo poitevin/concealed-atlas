@@ -207,11 +207,8 @@ const App = () => {
   return (
     <div className="App" ref={displayRef} onClick={handleClick}>
       <div className="content-container">
-        <div className="author-container">
-          <span className="author-text">Poem by: Pedro Poitevin</span>
-        </div>
-        <div className="photographer-container">
-          <span className="photographer-text">Photo by: Arturo Godoy</span>
+        <div className="credits-container">
+          <span className="credits-text">Poem: Pedro Poitevin | Photo: Arturo Godoy</span>
         </div>
         <div
           className={`content-window${

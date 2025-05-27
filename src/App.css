@@ -435,7 +435,7 @@
   
   .monospace {
     /* Ultra-small font for tiny screens */
-    font-size: clamp(7px, 1.1vh, 9px);
+    font-size: clamp(8px, 1.1vh, 10px);
     /* Better line spacing for readability */
     line-height: 1.4;
     padding: clamp(1px, 0.2vh, 2px) clamp(1px, 0.2vw, 2px);

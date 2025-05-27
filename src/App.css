@@ -334,7 +334,7 @@
   .content-window {
     /* Reduce margins but ensure scrolling works */
     padding-top: clamp(4px, 1vh, 8px);
-    padding-bottom: clamp(80px, 12vh, 100px); /* Space for stacked bottom elements */
+    padding-bottom: clamp(90px, 14vh, 110px); /* Increased space for non-overlapping stacked bottom elements */
     padding-left: clamp(4px, 1vw, 8px);
     padding-right: clamp(4px, 1vw, 8px);
     /* ENABLE SCROLLING ON MOBILE */
@@ -343,10 +343,10 @@
   }
 
   .monospace {
-    /* LARGER, CONFIGURABLE FONT SIZE */
-    font-size: calc(clamp(8px, 1.4vh, 11px) * var(--mobile-font-multiplier));
+    /* SLIGHTLY SMALLER, CONFIGURABLE FONT SIZE */
+    font-size: calc(clamp(7px, 1.2vh, 9px) * var(--mobile-font-multiplier));
     /* Better line-height for readability */
-    line-height: 1.35;
+    line-height: 1.3;
     /* Minimal internal padding to maximize text width */
     padding: clamp(2px, 0.4vh, 4px) clamp(2px, 0.4vw, 4px);
     /* Light text shadow */
@@ -388,11 +388,11 @@
   }
 
   .author-container {
-    bottom: clamp(55px, 8vh, 70px); /* Above photographer */
+    bottom: clamp(60px, 9vh, 80px); /* More space above photographer */
   }
 
   .photographer-container {
-    bottom: clamp(40px, 6vh, 50px); /* Above CTA button */
+    bottom: clamp(42px, 6.5vh, 55px); /* More space above CTA button */
   }
 
   .cta-container {

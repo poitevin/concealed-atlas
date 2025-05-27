@@ -84,6 +84,11 @@
     padding-top: 0;
     padding-bottom: 0;
   }
+  
+  /* Credits positioned to match poem left margin */
+  .credits-container {
+    left: clamp(24px, 4vw, 60px); /* Match poem padding-left */
+  }
 }
 
 /* Tablet adjustments */
@@ -92,6 +97,11 @@
     font-size: clamp(12px, 1.7vh, 16px);
     padding-left: clamp(16px, 3vw, 40px);
     padding-top: clamp(8px, 1.5vh, 20px);
+  }
+  
+  /* Credits positioned to match poem left margin */
+  .credits-container {
+    left: clamp(16px, 3vw, 40px); /* Match poem padding-left */
   }
 }
 
@@ -108,13 +118,13 @@
     height: 100dvh;
     /* Minimal safe area padding */
     padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 70px); /* Reduced for single credits line */
+    padding-bottom: env(safe-area-inset-bottom, 70px);
   }
   
   .content-window {
     /* Further reduce margins to prevent word overflow */
     padding-top: clamp(4px, 1vh, 8px);
-    padding-bottom: clamp(60px, 10vh, 75px); /* Reduced for single credits line */
+    padding-bottom: clamp(50px, 8vh, 70px); /* Back to original since credits are in corner */
     padding-left: clamp(4px, 1vw, 8px);
     padding-right: clamp(4px, 1vw, 8px);
   }
@@ -145,9 +155,10 @@
     margin-bottom: clamp(5px, 1vh, 10px); /* Options: 3-6px (tight), 5-10px (current), 8-15px (loose) */
   }
   
-  /* Combined credits for mobile */
+  /* Combined credits for mobile - match content-window left padding */
   .credits-container {
-    bottom: clamp(35px, 5vh, 45px); /* Above CTA button */
+    left: clamp(4px, 1vw, 8px); /* Match content-window padding-left */
+    bottom: clamp(15px, 2.5vh, 20px);
     font-size: clamp(7px, 1.2vh, 9px);
     padding: clamp(2px, 0.4vh, 4px) clamp(4px, 0.8vw, 6px);
   }
@@ -294,13 +305,12 @@
   max-width: 100%;
 }
 
-/* Combined Credits Container - Responsive positioning */
+/* Combined Credits Container - Left-aligned with poem margin */
 .credits-container {
   position: fixed;
-  left: 50%;
-  bottom: clamp(45px, 6vh, 60px); /* Above the CTA button */
-  transform: translateX(-50%);
-  text-align: center;
+  left: clamp(8px, 2vw, 24px); /* Match content-window padding */
+  bottom: clamp(15px, 2.5vh, 25px);
+  text-align: left;
   z-index: 10;
   padding: clamp(4px, 0.8vh, 8px) clamp(8px, 1.5vw, 16px);
   font-size: clamp(10px, 0.8rem, 13px);
@@ -316,7 +326,7 @@
 
 .credits-container:hover {
   background-color: rgba(255, 255, 255, 0.9);
-  transform: translateX(-50%) translateY(-1px);
+  transform: translateY(-1px);
 }
 
 /* CTA Button - Responsive sizing */
@@ -354,7 +364,7 @@
 @media screen and (max-height: 500px) and (orientation: landscape) and (max-width: 480px) {
   .content-window {
     padding-top: clamp(2px, 0.6vh, 4px);
-    padding-bottom: clamp(35px, 7vh, 50px); /* Reduced for single credits line */
+    padding-bottom: clamp(25px, 5vh, 40px); /* Back to reasonable spacing */
     padding-left: clamp(4px, 1vw, 8px);
     padding-right: clamp(4px, 1vw, 8px);
   }
@@ -375,9 +385,10 @@
     margin-bottom: clamp(2px, 0.5vh, 4px);
   }
 
-  /* Combined credits for landscape mobile */
+  /* Combined credits for landscape mobile - match content-window left padding */
   .credits-container {
-    bottom: clamp(20px, 3.5vh, 25px); /* Above CTA button */
+    left: clamp(4px, 1vw, 8px); /* Match content-window padding-left */
+    bottom: clamp(15px, 2.5vh, 20px);
     font-size: clamp(5px, 1.1vh, 7px);
     padding: clamp(1px, 0.2vh, 2px) clamp(2px, 0.4vw, 3px);
   }
@@ -428,13 +439,13 @@
 /* Ensure no text overflow on very small screens */
 @media screen and (max-width: 320px) {
   .content-container {
-    padding-bottom: env(safe-area-inset-bottom, 80px); /* Reduced for single credits line */
+    padding-bottom: env(safe-area-inset-bottom, 70px); /* Back to reasonable spacing */
   }
   
   .content-window {
     /* Ultra-minimal margins for tiny screens */
     padding-top: clamp(3px, 0.8vh, 6px);
-    padding-bottom: clamp(60px, 12vh, 80px); /* Reduced for single credits line */
+    padding-bottom: clamp(40px, 8vh, 60px); /* Back to reasonable spacing */
     padding-left: clamp(3px, 0.8vw, 6px);
     padding-right: clamp(3px, 0.8vw, 6px);
   }
@@ -457,9 +468,10 @@
     margin-bottom: clamp(3px, 0.6vh, 6px);
   }
   
-  /* Combined credits for very small screens */
+  /* Combined credits for very small screens - match content-window left padding */
   .credits-container {
-    bottom: clamp(30px, 5vh, 40px); /* Above CTA button */
+    left: clamp(3px, 0.8vw, 6px); /* Match content-window padding-left */
+    bottom: clamp(15px, 2.5vh, 20px);
     font-size: clamp(6px, 1vh, 8px);
     padding: clamp(1px, 0.3vh, 3px) clamp(3px, 0.6vw, 5px);
   }

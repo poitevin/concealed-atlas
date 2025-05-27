@@ -71,7 +71,7 @@
 }
 
 /* Desktop-specific improvements */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 769px) {
   .monospace {
     /* Larger margins for desktop breathing room */
     padding-left: clamp(24px, 4vw, 60px);
@@ -87,7 +87,7 @@
 }
 
 /* Tablet adjustments */
-@media screen and (min-width: 481px) and (max-width: 767px) {
+@media screen and (min-width: 481px) and (max-width: 768px) {
   .monospace {
     font-size: clamp(12px, 1.7vh, 16px);
     padding-left: clamp(16px, 3vw, 40px);
@@ -106,38 +106,53 @@
   .content-container {
     height: 100vh;
     height: 100dvh;
-    /* Add safe area padding for notched phones */
+    /* Minimal safe area padding */
     padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 60px);
+    padding-bottom: env(safe-area-inset-bottom, 80px);
   }
   
   .content-window {
-    /* Ensure content starts below browser UI */
-    padding-top: clamp(20px, 5vh, 40px);
-    padding-bottom: clamp(80px, 15vh, 120px);
+    /* Much smaller mobile padding */
+    padding-top: clamp(8px, 2vh, 16px);
+    padding-bottom: clamp(70px, 12vh, 100px);
+    padding-left: clamp(8px, 2vw, 16px);
+    padding-right: clamp(8px, 2vw, 16px);
   }
   
   .monospace {
-    font-size: clamp(11px, 2.2vh, 15px);
-    line-height: 1.35;
-    /* Better mobile padding */
-    padding: clamp(8px, 2vh, 16px) clamp(12px, 3vw, 20px);
-    /* Stronger text shadow for mobile */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.5);
-    /* Ensure text is always visible */
-    color: #ffffff;
-    font-weight: bold;
+    /* Smaller font to fit more content */
+    font-size: clamp(9px, 1.8vh, 12px);
+    line-height: 1.25;
+    /* Minimal mobile padding */
+    padding: clamp(4px, 1vh, 8px) clamp(4px, 1vw, 8px);
+    /* Keep text shadows but reduce intensity */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    /* Ensure full width usage */
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .stanza {
+    /* Tighter stanza spacing on mobile */
+    margin-bottom: clamp(6px, 1vh, 12px);
   }
   
   /* Move credits higher to avoid overlap */
   .author-container,
   .photographer-container {
-    bottom: clamp(70px, 12vh, 100px);
-    font-size: clamp(9px, 1.8vh, 12px);
+    bottom: clamp(50px, 8vh, 70px);
+    font-size: clamp(8px, 1.5vh, 11px);
+    padding: clamp(3px, 0.6vh, 6px) clamp(5px, 1vw, 8px);
   }
   
   .cta-container {
-    bottom: clamp(20px, 4vh, 40px);
+    bottom: clamp(15px, 3vh, 25px);
+  }
+  
+  .cta-button {
+    font-size: clamp(10px, 1.8vh, 13px);
+    padding: clamp(4px, 0.8vh, 6px) clamp(8px, 2vw, 12px);
   }
 }
 
@@ -330,26 +345,32 @@
 }
 
 /* Landscape mobile adjustments */
-@media screen and (max-height: 500px) and (orientation: landscape) {
+@media screen and (max-height: 500px) and (orientation: landscape) and (max-width: 480px) {
   .content-window {
-    padding-top: clamp(10px, 3vh, 20px);
-    padding-bottom: clamp(60px, 15vh, 90px);
+    padding-top: clamp(4px, 1vh, 8px);
+    padding-bottom: clamp(40px, 10vh, 60px);
+    padding-left: clamp(6px, 1.5vw, 12px);
+    padding-right: clamp(6px, 1.5vw, 12px);
   }
   
   .monospace {
-    font-size: clamp(10px, 2vh, 14px);
-    line-height: 1.25;
-    padding: clamp(4px, 1vh, 8px) clamp(6px, 2vw, 12px);
+    font-size: clamp(8px, 1.6vh, 11px);
+    line-height: 1.2;
+    padding: clamp(2px, 0.5vh, 4px) clamp(2px, 0.5vw, 4px);
   }
   
   .stanza {
-    margin-bottom: clamp(6px, 1.5vh, 12px);
+    margin-bottom: clamp(4px, 1vh, 8px);
   }
 
   .author-container,
-  .photographer-container,
+  .photographer-container {
+    bottom: clamp(6px, 2vh, 12px);
+    font-size: clamp(7px, 1.4vh, 10px);
+  }
+  
   .cta-container {
-    bottom: clamp(8px, 2vh, 16px);
+    bottom: clamp(6px, 2vh, 12px);
   }
 }
 
@@ -388,14 +409,21 @@
 
 /* Ensure no text overflow on very small screens */
 @media screen and (max-width: 320px) {
-  .monospace {
-    font-size: clamp(10px, 2vh, 13px);
-    word-break: break-word;
-    line-height: 1.3;
+  .content-window {
+    padding-top: clamp(6px, 1.5vh, 12px);
+    padding-bottom: clamp(60px, 15vh, 90px);
+    padding-left: clamp(6px, 1.5vw, 12px);
+    padding-right: clamp(6px, 1.5vw, 12px);
   }
   
-  .content-window {
-    padding-top: clamp(25px, 6vh, 45px);
-    padding-bottom: clamp(90px, 18vh, 130px);
+  .monospace {
+    font-size: clamp(8px, 1.6vh, 11px);
+    line-height: 1.2;
+    padding: clamp(2px, 0.5vh, 4px) clamp(2px, 0.5vw, 4px);
+    word-break: break-word;
+  }
+  
+  .stanza {
+    margin-bottom: clamp(4px, 0.8vh, 8px);
   }
 }

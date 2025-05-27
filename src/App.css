@@ -120,8 +120,8 @@
   }
   
   .monospace {
-    /* Slightly smaller font to prevent "bustle" and "riches" overflow */
-    font-size: clamp(7px, 1.3vh, 9px);
+    /* Even smaller font to handle long airport code lines */
+    font-size: clamp(6px, 1.2vh, 8px);
     /* Increase line-height to use vertical space better */
     line-height: 1.3;
     /* Minimal internal padding to maximize text width */
@@ -135,6 +135,8 @@
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto; /* Allow hyphenation for long words */
+    /* Allow breaking at hyphens in airport codes */
+    word-break: break-all;
   }
   
   .stanza {

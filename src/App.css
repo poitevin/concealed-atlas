@@ -88,6 +88,7 @@
   /* Credits positioned to match poem left margin */
   .credits-container {
     left: clamp(24px, 4vw, 60px); /* Match poem padding-left */
+    max-width: calc(50vw - 80px); /* More space for desktop */
   }
 }
 
@@ -102,6 +103,7 @@
   /* Credits positioned to match poem left margin */
   .credits-container {
     left: clamp(16px, 3vw, 40px); /* Match poem padding-left */
+    max-width: calc(50vw - 60px); /* Prevent overlap on tablet */
   }
 }
 
@@ -155,19 +157,20 @@
     margin-bottom: clamp(5px, 1vh, 10px); /* Options: 3-6px (tight), 5-10px (current), 8-15px (loose) */
   }
   
-  /* Combined credits for mobile - left corner to match desktop, CTA on right */
+  /* Combined credits for mobile - left corner, aligned with CTA height */
   .credits-container {
     left: clamp(4px, 1vw, 8px) !important; /* Left corner, match content padding */
     transform: none; /* Remove centering transform */
-    bottom: clamp(15px, 2.5vh, 20px); /* Back to reasonable height */
+    bottom: clamp(8px, 1.5vh, 16px); /* Match CTA button height exactly */
     text-align: left; /* Left-aligned text */
-    font-size: clamp(7px, 1.2vh, 9px);
-    padding: clamp(2px, 0.4vh, 4px) clamp(4px, 0.8vw, 6px);
+    font-size: clamp(6px, 1vh, 8px); /* Smaller font for mobile */
+    padding: clamp(2px, 0.3vh, 3px) clamp(3px, 0.6vw, 5px); /* Reduced padding */
+    max-width: calc(50vw - 16px); /* Prevent overlap with CTA */
   }
   
   .cta-container {
     right: clamp(4px, 1vw, 8px); /* Right corner, match content padding */
-    bottom: clamp(15px, 2.5vh, 20px); /* Same height as credits */
+    bottom: clamp(8px, 1.5vh, 16px); /* Exact same height as credits */
   }
   
   .cta-button {
@@ -312,16 +315,16 @@
 .credits-container {
   position: fixed;
   left: clamp(8px, 2vw, 24px); /* Match content-window padding */
-  bottom: clamp(15px, 2.5vh, 25px);
+  bottom: clamp(8px, 1.5vh, 16px); /* Match CTA button height exactly */
   text-align: left;
   z-index: 10;
-  padding: clamp(4px, 0.8vh, 8px) clamp(8px, 1.5vw, 16px);
-  font-size: clamp(10px, 0.8rem, 13px);
+  padding: clamp(3px, 0.6vh, 6px) clamp(6px, 1.2vw, 12px); /* Reduced padding */
+  font-size: clamp(8px, 0.7rem, 11px); /* Smaller font size */
   color: #000;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 3px;
   transition: all 0.2s ease;
-  max-width: calc(100vw - 16px);
+  max-width: calc(50vw - 32px); /* Limit width to prevent overlap */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

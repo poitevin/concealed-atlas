@@ -118,13 +118,13 @@
     height: 100dvh;
     /* Minimal safe area padding */
     padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 90px); /* More space for centered credits */
+    padding-bottom: env(safe-area-inset-bottom, 110px); /* Much more space for higher credits position */
   }
   
   .content-window {
     /* Further reduce margins to prevent word overflow */
     padding-top: clamp(4px, 1vh, 8px);
-    padding-bottom: clamp(70px, 12vh, 90px); /* More space for centered credits */
+    padding-bottom: clamp(90px, 15vh, 120px); /* Much more space for higher credits position */
     padding-left: clamp(4px, 1vw, 8px);
     padding-right: clamp(4px, 1vw, 8px);
   }
@@ -155,11 +155,11 @@
     margin-bottom: clamp(5px, 1vh, 10px); /* Options: 3-6px (tight), 5-10px (current), 8-15px (loose) */
   }
   
-  /* Combined credits for mobile - centered above CTA button with proper spacing */
+  /* Combined credits for mobile - centered above CTA button with much more spacing */
   .credits-container {
     left: 50% !important; /* Override desktop left positioning */
     transform: translateX(-50%);
-    bottom: clamp(50px, 8vh, 70px); /* Higher to avoid overlap with CTA */
+    bottom: clamp(70px, 12vh, 100px); /* Much higher to avoid overlap with CTA */
     text-align: center;
     font-size: clamp(7px, 1.2vh, 9px);
     padding: clamp(2px, 0.4vh, 4px) clamp(4px, 0.8vw, 6px);
@@ -374,7 +374,7 @@
 @media screen and (max-height: 500px) and (orientation: landscape) and (max-width: 480px) {
   .content-window {
     padding-top: clamp(2px, 0.6vh, 4px);
-    padding-bottom: clamp(40px, 8vh, 55px); /* More space for centered credits */
+    padding-bottom: clamp(60px, 12vh, 80px); /* More space for higher credits position */
     padding-left: clamp(4px, 1vw, 8px);
     padding-right: clamp(4px, 1vw, 8px);
   }
@@ -395,11 +395,11 @@
     margin-bottom: clamp(2px, 0.5vh, 4px);
   }
 
-  /* Combined credits for landscape mobile - centered above CTA button with proper spacing */
+  /* Combined credits for landscape mobile - centered above CTA button with much more spacing */
   .credits-container {
     left: 50% !important; /* Override desktop left positioning */
     transform: translateX(-50%);
-    bottom: clamp(35px, 6vh, 45px); /* Higher to avoid overlap with CTA */
+    bottom: clamp(50px, 9vh, 70px); /* Much higher to avoid overlap with CTA */
     text-align: center;
     font-size: clamp(5px, 1.1vh, 7px);
     padding: clamp(1px, 0.2vh, 2px) clamp(2px, 0.4vw, 3px);
@@ -451,13 +451,13 @@
 /* Ensure no text overflow on very small screens */
 @media screen and (max-width: 320px) {
   .content-container {
-    padding-bottom: env(safe-area-inset-bottom, 100px); /* More space for centered credits */
+    padding-bottom: env(safe-area-inset-bottom, 120px); /* Much more space for higher credits position */
   }
   
   .content-window {
     /* Ultra-minimal margins for tiny screens */
     padding-top: clamp(3px, 0.8vh, 6px);
-    padding-bottom: clamp(80px, 15vh, 100px); /* More space for centered credits */
+    padding-bottom: clamp(100px, 18vh, 130px); /* Much more space for higher credits position */
     padding-left: clamp(3px, 0.8vw, 6px);
     padding-right: clamp(3px, 0.8vw, 6px);
   }
@@ -480,17 +480,17 @@
     margin-bottom: clamp(3px, 0.6vh, 6px);
   }
   
-  /* Combined credits for very small screens - centered above CTA button */
+  /* Combined credits for very small screens - centered above CTA button with much more spacing */
   .credits-container {
     left: 50% !important; /* Override desktop left positioning */
     transform: translateX(-50%);
-    bottom: clamp(30px, 5vh, 40px); /* Above CTA button */
+    bottom: clamp(65px, 10vh, 85px); /* Much higher to avoid overlap with CTA */
     text-align: center;
     font-size: clamp(6px, 1vh, 8px);
     padding: clamp(1px, 0.3vh, 3px) clamp(3px, 0.6vw, 5px);
   }
   
   .cta-container {
-    bottom: clamp(8px, 1.5vh, 12px);
+    bottom: clamp(8px, 1.5vh, 12px); /* Standard CTA positioning */
   }
 }

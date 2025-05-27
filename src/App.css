@@ -1,9 +1,6 @@
-/* Base variables - EASILY CONFIGURABLE FONT SIZES */
+/* Base variables */
 :root {
   --common-font-size: 1.8vw;
-  /* Mobile font size multipliers - ADJUST THESE TO EXPERIMENT */
-  --mobile-font-multiplier: 1.0; /* Increase this to make mobile text larger */
-  --mobile-credits-multiplier: 1.0; /* Adjust credit text size separately */
 }
 
 /* Layout containers */
@@ -39,9 +36,6 @@
   flex: 1;
   min-height: 0;
   height: 100%;
-  /* ENABLE SCROLLING */
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .responsive-container {
@@ -51,9 +45,6 @@
   flex: 1;
   min-height: 0;
   height: 100%;
-  /* ENABLE SCROLLING */
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 /* Text content - Responsive scaling */
@@ -71,12 +62,124 @@
   /* Mobile-first padding, more generous on desktop */
   padding: clamp(4px, 1vh, 12px) clamp(8px, 2vw, 24px);
   white-space: pre-wrap;
-  overflow: visible; /* CHANGED: Allow content to expand */
-  height: auto; /* CHANGED: Let content determine height */
-  max-height: none; /* CHANGED: Remove height restriction */
+  overflow: hidden;
+  height: 100%;
+  max-height: 100%;
   width: 100%;
   margin: 0;
   transition: opacity 0.3s ease-in-out, font-size 0.3s ease-out;
+}
+
+/* Desktop-specific improvements */
+@media screen and (min-width: 769px) {
+  .monospace {
+    /* Larger margins for desktop breathing room */
+    padding-left: clamp(24px, 4vw, 60px);
+    padding-top: clamp(12px, 2vh, 30px);
+    /* Slightly larger font on desktop */
+    font-size: clamp(14px, 1.8vh, 18px);
+  }
+  
+  .content-container {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+/* Tablet adjustments */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .monospace {
+    font-size: clamp(12px, 1.7vh, 16px);
+    padding-left: clamp(16px, 3vw, 40px);
+    padding-top: clamp(8px, 1.5vh, 20px);
+  }
+}
+
+/* Mobile-specific optimizations */
+@media screen and (max-width: 480px) {
+  .App {
+    /* Ensure proper mobile viewport handling */
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
+  }
+  
+  .content-container {
+    height: 100vh;
+    height: 100dvh;
+    /* Minimal safe area padding */
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 90px); /* Increased for credit boxes */
+  }
+  
+  .content-window {
+    /* Further reduce margins to prevent word overflow */
+    padding-top: clamp(4px, 1vh, 8px);
+    padding-bottom: clamp(70px, 12vh, 90px); /* Increased for credit boxes */
+    padding-left: clamp(4px, 1vw, 8px);
+    padding-right: clamp(4px, 1vw, 8px);
+  }
+  
+  .monospace {
+    /* Return to larger, more readable font */
+    font-size: clamp(7px, 1.3vh, 9px);
+    /* LEADING CONTROL: Adjust this value to change line spacing */
+    line-height: 1.3; /* Options: 1.2 (tighter), 1.3 (current), 1.4 (looser) */
+    /* Minimal internal padding to maximize text width */
+    padding: clamp(1px, 0.2vh, 2px) clamp(1px, 0.2vw, 2px);
+    /* Light text shadow */
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+    /* Ensure full width usage and better wrapping */
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    /* FIXED: Less aggressive word breaking to prevent airport code splitting */
+    word-wrap: normal; /* Changed from break-word */
+    overflow-wrap: normal; /* Changed from break-word */
+    hyphens: manual; /* Changed from auto - only break at explicit hyphens */
+    /* Allow horizontal scroll if airport codes are too long rather than breaking */
+    overflow-x: auto;
+  }
+  
+  .stanza {
+    /* INTERSTANZAIC LEADING CONTROL: Adjust this value to change stanza spacing */
+    margin-bottom: clamp(5px, 1vh, 10px); /* Options: 3-6px (tight), 5-10px (current), 8-15px (loose) */
+  }
+  
+  /* FIXED: Stacked credit boxes with consistent width */
+  .author-container,
+  .photographer-container {
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    width: clamp(160px, 25vw, 200px); /* Fixed width for visual consistency */
+    max-width: calc(100vw - 16px); /* Prevent overflow */
+    text-align: center;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow if text is too long */
+    text-overflow: ellipsis; /* Add ellipsis for very long text */
+  }
+  
+  .author-container {
+    bottom: clamp(45px, 7vh, 65px); /* Moved higher */
+  }
+  
+  .photographer-container {
+    bottom: clamp(25px, 4vh, 35px); /* Below author */
+  }
+  
+  .author-container,
+  .photographer-container {
+    font-size: clamp(7px, 1.2vh, 9px);
+    padding: clamp(2px, 0.4vh, 4px) clamp(4px, 0.8vw, 6px);
+  }
+  
+  .cta-container {
+    bottom: clamp(5px, 1vh, 10px); /* Moved down to accommodate stacked credits */
+  }
+  
+  .cta-button {
+    font-size: clamp(8px, 1.4vh, 11px);
+    padding: clamp(3px, 0.6vh, 5px) clamp(6px, 1.5vw, 10px);
+  }
 }
 
 .content-window.transitioning .monospace {
@@ -101,6 +204,9 @@
 .code {
   transition: all 0.2s ease;
   cursor: pointer;
+  /* FIXED: Prevent airport codes from breaking */
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .code:hover {
@@ -208,7 +314,7 @@
   max-width: 100%;
 }
 
-/* Credits containers - CONSISTENT SIZING */
+/* Credits containers - Responsive positioning */
 .author-container,
 .photographer-container {
   position: fixed;
@@ -220,10 +326,6 @@
   border-radius: 3px;
   z-index: 10;
   transition: all 0.2s ease;
-  /* CONSISTENT WIDTH */
-  min-width: clamp(120px, 20vw, 160px);
-  text-align: center;
-  box-sizing: border-box;
 }
 
 .author-container {
@@ -240,7 +342,7 @@
   transform: translateY(-1px);
 }
 
-/* CTA Button - Default positioning */
+/* CTA Button - Responsive sizing */
 .cta-container {
   position: fixed;
   left: 50%;
@@ -271,246 +373,63 @@
   box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
-/* Combined credits element for very small screens */
-.combined-credits {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: calc(clamp(6px, 1vh, 8px) * var(--mobile-credits-multiplier));
-  color: #000;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 2px;
-  padding: clamp(1px, 0.2vh, 2px) clamp(3px, 0.5vw, 4px);
-  text-align: center;
-  max-width: 95vw;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  z-index: 10;
-  display: none; /* Hidden by default, shown via JavaScript */
-}
-
-/* Desktop-specific improvements */
-@media screen and (min-width: 769px) {
-  .monospace {
-    /* Larger margins for desktop breathing room */
-    padding-left: clamp(24px, 4vw, 60px);
-    padding-top: clamp(12px, 2vh, 30px);
-    /* Slightly larger font on desktop */
-    font-size: clamp(14px, 1.8vh, 18px);
-  }
-
-  .content-container {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-}
-
-/* Tablet adjustments */
-@media screen and (min-width: 481px) and (max-width: 768px) {
-  .monospace {
-    font-size: clamp(12px, 1.7vh, 16px);
-    padding-left: clamp(16px, 3vw, 40px);
-    padding-top: clamp(8px, 1.5vh, 20px);
-  }
-}
-
-/* Mobile-specific optimizations - IMPROVED LAYOUT WITH LARGER FONTS */
-@media screen and (max-width: 480px) {
-  .App {
-    /* Ensure proper mobile viewport handling */
-    height: 100vh;
-    height: 100dvh; /* Dynamic viewport height for mobile browsers */
-  }
-
-  .content-container {
-    height: 100vh;
-    height: 100dvh;
-    /* Minimal safe area padding */
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 80px); /* Space for stacked elements */
-  }
-
-  .content-window {
-    /* Reduce margins but ensure scrolling works */
-    padding-top: clamp(4px, 1vh, 8px);
-    padding-bottom: clamp(65px, 10vh, 80px); /* Adjusted for smaller, properly spaced bottom elements */
-    padding-left: clamp(4px, 1vw, 8px);
-    padding-right: clamp(4px, 1vw, 8px);
-    /* ENABLE SCROLLING ON MOBILE */
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  .monospace {
-    /* SLIGHTLY SMALLER, CONFIGURABLE FONT SIZE */
-    font-size: calc(clamp(7px, 1.2vh, 9px) * var(--mobile-font-multiplier));
-    /* Better line-height for readability */
-    line-height: 1.3;
-    /* Minimal internal padding to maximize text width */
-    padding: clamp(2px, 0.4vh, 4px) clamp(2px, 0.4vw, 4px);
-    /* Light text shadow */
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
-    /* Ensure full width usage and better wrapping */
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto; /* Allow hyphenation for long words */
-    /* Allow breaking at hyphens in airport codes */
-    word-break: break-all;
-  }
-
-  .stanza {
-    /* Maintain good stanza spacing */
-    margin-bottom: clamp(6px, 1.2vh, 12px);
-  }
-
-  /* IMPROVED: Much smaller, non-overlapping bottom elements */
-  .author-container,
-  .photographer-container {
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    font-size: calc(clamp(6px, 1vh, 8px) * var(--mobile-credits-multiplier));
-    padding: clamp(2px, 0.3vh, 3px) clamp(4px, 0.8vw, 6px);
-    background-color: rgba(255, 255, 255, 0.75);
-    border-radius: 2px;
-    /* MUCH SMALLER SIZING */
-    min-width: clamp(100px, 25vw, 130px);
-    max-width: 80vw;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    box-sizing: border-box;
-  }
-
-  .author-container {
-    bottom: clamp(50px, 7vh, 60px); /* Above photographer with more space */
-  }
-
-  .photographer-container {
-    bottom: clamp(35px, 5vh, 42px); /* Above CTA button with more space */
-  }
-
-  .cta-container {
-    bottom: clamp(8px, 1.2vh, 12px); /* Lowest element */
-  }
-
-  .cta-button {
-    font-size: calc(clamp(7px, 1.1vh, 9px) * var(--mobile-credits-multiplier));
-    padding: clamp(3px, 0.4vh, 4px) clamp(6px, 1.2vw, 10px);
-    border-radius: 12px;
-    max-width: 80vw;
-    box-sizing: border-box;
-  }
-
-  /* Mobile hover states */
-  .author-container:hover,
-  .photographer-container:hover {
-    background-color: rgba(255, 255, 255, 0.9);
-    transform: translateX(-50%) translateY(-1px);
-  }
-}
-
-/* Very small screens - Use combined credits */
-@media screen and (max-width: 320px) {
-  .content-window {
-    /* Ultra-minimal margins for tiny screens */
-    padding-top: clamp(3px, 0.8vh, 6px);
-    padding-bottom: clamp(50px, 10vh, 70px); /* Reduced since we have fewer elements */
-    padding-left: clamp(3px, 0.8vw, 6px);
-    padding-right: clamp(3px, 0.8vw, 6px);
-  }
-
-  .monospace {
-    /* Configurable ultra-small font for tiny screens */
-    font-size: calc(clamp(7px, 1.2vh, 9px) * var(--mobile-font-multiplier));
-    /* Better line spacing for readability */
-    line-height: 1.3;
-    padding: clamp(1px, 0.2vh, 2px) clamp(1px, 0.2vw, 2px);
-    word-break: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-  }
-
-  .stanza {
-    /* Tight but readable stanza spacing */
-    margin-bottom: clamp(4px, 0.8vh, 8px);
-  }
-
-  /* Hide individual credits on very small screens */
-  .author-container,
-  .photographer-container {
-    display: none;
-  }
-
-  /* Show combined credits instead */
-  .combined-credits {
-    display: block;
-    bottom: clamp(35px, 5vh, 45px);
-  }
-
-  .cta-container {
-    bottom: clamp(8px, 1.5vh, 12px);
-  }
-
-  .cta-button {
-    font-size: calc(clamp(8px, 1.2vh, 10px) * var(--mobile-credits-multiplier));
-    padding: clamp(3px, 0.4vh, 4px) clamp(8px, 1.5vw, 12px);
-  }
-}
-
-/* Landscape mobile adjustments - SCROLLING ENABLED */
+/* Landscape mobile adjustments */
 @media screen and (max-height: 500px) and (orientation: landscape) and (max-width: 480px) {
   .content-window {
     padding-top: clamp(2px, 0.6vh, 4px);
-    padding-bottom: clamp(45px, 9vh, 60px); /* Adjusted for smaller elements in landscape */
+    padding-bottom: clamp(40px, 8vh, 55px); /* Increased for stacked credits */
     padding-left: clamp(4px, 1vw, 8px);
     padding-right: clamp(4px, 1vw, 8px);
-    /* CRITICAL: Enable scrolling in landscape */
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
   }
-
+  
   .monospace {
-    /* Configurable small font for landscape */
-    font-size: calc(clamp(7px, 1.3vh, 9px) * var(--mobile-font-multiplier));
-    line-height: 1.2;
+    /* Return to readable landscape font */
+    font-size: clamp(6px, 1.2vh, 8px);
+    line-height: 1.15;
     padding: clamp(1px, 0.2vh, 2px) clamp(1px, 0.2vw, 2px);
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
+    /* FIXED: Prevent airport code breaking in landscape too */
+    word-wrap: normal;
+    overflow-wrap: normal;
+    hyphens: manual;
+    overflow-x: auto;
   }
-
+  
   .stanza {
-    margin-bottom: clamp(3px, 0.6vh, 6px);
+    margin-bottom: clamp(2px, 0.5vh, 4px);
   }
 
+  /* FIXED: Stacked credits for landscape mobile */
   .author-container {
-    bottom: clamp(30px, 6vh, 38px);
-    font-size: calc(clamp(5px, 0.9vh, 7px) * var(--mobile-credits-multiplier));
-    min-width: clamp(90px, 22vw, 120px);
-    padding: clamp(1px, 0.2vh, 2px) clamp(3px, 0.6vw, 5px);
+    bottom: clamp(15px, 3vh, 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(120px, 20vw, 160px); /* Consistent width for landscape */
+    font-size: clamp(5px, 1.1vh, 7px);
+    padding: clamp(1px, 0.2vh, 2px) clamp(2px, 0.4vw, 3px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-
+  
   .photographer-container {
-    bottom: clamp(20px, 4vh, 25px);
-    font-size: calc(clamp(5px, 0.9vh, 7px) * var(--mobile-credits-multiplier));
-    min-width: clamp(90px, 22vw, 120px);
-    padding: clamp(1px, 0.2vh, 2px) clamp(3px, 0.6vw, 5px);
+    bottom: clamp(5px, 1.5vh, 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(120px, 20vw, 160px); /* Consistent width for landscape */
+    font-size: clamp(5px, 1.1vh, 7px);
+    padding: clamp(1px, 0.2vh, 2px) clamp(2px, 0.4vw, 3px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-
+  
   .cta-container {
-    bottom: clamp(4px, 0.8vh, 6px);
+    bottom: clamp(25px, 4vh, 30px); /* Moved up to avoid overlap */
   }
-
+  
   .cta-button {
-    font-size: calc(clamp(7px, 1.2vh, 9px) * var(--mobile-credits-multiplier));
-    padding: clamp(2px, 0.3vh, 3px) clamp(6px, 1vw, 8px);
+    font-size: clamp(6px, 1.2vh, 8px);
+    padding: clamp(2px, 0.3vh, 3px) clamp(3px, 0.8vw, 5px);
   }
 }
 
@@ -519,7 +438,7 @@
   .App {
     height: -webkit-fill-available;
   }
-
+  
   .content-container {
     height: -webkit-fill-available;
     max-height: -webkit-fill-available;
@@ -547,24 +466,64 @@
   border-radius: 2px;
 }
 
-/* EASY FONT SIZE CONFIGURATION CLASSES */
-/* Add these classes to your HTML body to experiment with different sizes */
-.font-size-small {
-  --mobile-font-multiplier: 0.8;
-  --mobile-credits-multiplier: 0.9;
-}
-
-.font-size-medium {
-  --mobile-font-multiplier: 1.0;
-  --mobile-credits-multiplier: 1.0;
-}
-
-.font-size-large {
-  --mobile-font-multiplier: 1.2;
-  --mobile-credits-multiplier: 1.1;
-}
-
-.font-size-xlarge {
-  --mobile-font-multiplier: 1.4;
-  --mobile-credits-multiplier: 1.2;
+/* Ensure no text overflow on very small screens */
+@media screen and (max-width: 320px) {
+  .content-container {
+    padding-bottom: env(safe-area-inset-bottom, 100px); /* More space for stacked credits */
+  }
+  
+  .content-window {
+    /* Ultra-minimal margins for tiny screens */
+    padding-top: clamp(3px, 0.8vh, 6px);
+    padding-bottom: clamp(80px, 15vh, 100px); /* Increased for stacked credits */
+    padding-left: clamp(3px, 0.8vw, 6px);
+    padding-right: clamp(3px, 0.8vw, 6px);
+  }
+  
+  .monospace {
+    /* Return to readable font size for tiny screens */
+    font-size: clamp(6px, 1.1vh, 8px);
+    /* Better line spacing for readability */
+    line-height: 1.25;
+    padding: clamp(1px, 0.2vh, 2px) clamp(1px, 0.2vw, 2px);
+    /* FIXED: Prevent breaking on tiny screens too */
+    word-wrap: normal;
+    overflow-wrap: normal;
+    hyphens: manual;
+    overflow-x: auto;
+  }
+  
+  .stanza {
+    /* Tight but readable stanza spacing */
+    margin-bottom: clamp(3px, 0.6vh, 6px);
+  }
+  
+  /* FIXED: Stacked credits for very small screens */
+  .author-container {
+    bottom: clamp(55px, 8vh, 70px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(140px, 22vw, 180px); /* Consistent width for tiny screens */
+    font-size: clamp(6px, 1vh, 8px);
+    padding: clamp(1px, 0.3vh, 3px) clamp(3px, 0.6vw, 5px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .photographer-container {
+    bottom: clamp(35px, 5vh, 45px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(140px, 22vw, 180px); /* Consistent width for tiny screens */
+    font-size: clamp(6px, 1vh, 8px);
+    padding: clamp(1px, 0.3vh, 3px) clamp(3px, 0.6vw, 5px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .cta-container {
+    bottom: clamp(8px, 1.5vh, 12px);
+  }
 }

@@ -155,18 +155,18 @@
     margin-bottom: clamp(5px, 1vh, 10px); /* Options: 3-6px (tight), 5-10px (current), 8-15px (loose) */
   }
   
-  /* Combined credits for mobile - centered above CTA button */
+  /* Combined credits for mobile - centered above CTA button with proper spacing */
   .credits-container {
     left: 50% !important; /* Override desktop left positioning */
     transform: translateX(-50%);
-    bottom: clamp(35px, 5vh, 45px); /* Above CTA button */
+    bottom: clamp(50px, 8vh, 70px); /* Higher to avoid overlap with CTA */
     text-align: center;
     font-size: clamp(7px, 1.2vh, 9px);
     padding: clamp(2px, 0.4vh, 4px) clamp(4px, 0.8vw, 6px);
   }
   
   .cta-container {
-    bottom: clamp(5px, 1vh, 10px);
+    bottom: clamp(8px, 1.5vh, 16px); /* Standard CTA positioning */
   }
   
   .cta-button {
@@ -395,18 +395,18 @@
     margin-bottom: clamp(2px, 0.5vh, 4px);
   }
 
-  /* Combined credits for landscape mobile - centered above CTA button */
+  /* Combined credits for landscape mobile - centered above CTA button with proper spacing */
   .credits-container {
     left: 50% !important; /* Override desktop left positioning */
     transform: translateX(-50%);
-    bottom: clamp(20px, 3.5vh, 25px); /* Above CTA button */
+    bottom: clamp(35px, 6vh, 45px); /* Higher to avoid overlap with CTA */
     text-align: center;
     font-size: clamp(5px, 1.1vh, 7px);
     padding: clamp(1px, 0.2vh, 2px) clamp(2px, 0.4vw, 3px);
   }
   
   .cta-container {
-    bottom: clamp(3px, 1vh, 6px);
+    bottom: clamp(8px, 1.5vh, 12px); /* Standard CTA positioning */
   }
   
   .cta-button {

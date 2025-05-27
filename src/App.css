@@ -18,7 +18,9 @@
 
 .content-container {
   height: 100vh;
+  height: 100dvh; /* Modern mobile viewport units */
   max-height: 100vh;
+  max-height: 100dvh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -77,7 +79,7 @@
     /* Slightly larger font on desktop */
     font-size: clamp(14px, 1.8vh, 18px);
   }
-
+  
   .content-container {
     padding-top: 0;
     padding-bottom: 0;
@@ -95,14 +97,47 @@
 
 /* Mobile-specific optimizations */
 @media screen and (max-width: 480px) {
-  .monospace {
-    font-size: clamp(10px, 1.5vh, 14px);
-    line-height: 1.3;
-    padding: clamp(4px, 0.8vh, 8px) clamp(6px, 1.5vw, 12px);
+  .App {
+    /* Ensure proper mobile viewport handling */
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
   }
-
+  
   .content-container {
-    padding-bottom: 15vh; /* Extra space for mobile UI */
+    height: 100vh;
+    height: 100dvh;
+    /* Add safe area padding for notched phones */
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 60px);
+  }
+  
+  .content-window {
+    /* Ensure content starts below browser UI */
+    padding-top: clamp(20px, 5vh, 40px);
+    padding-bottom: clamp(80px, 15vh, 120px);
+  }
+  
+  .monospace {
+    font-size: clamp(11px, 2.2vh, 15px);
+    line-height: 1.35;
+    /* Better mobile padding */
+    padding: clamp(8px, 2vh, 16px) clamp(12px, 3vw, 20px);
+    /* Stronger text shadow for mobile */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.5);
+    /* Ensure text is always visible */
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  /* Move credits higher to avoid overlap */
+  .author-container,
+  .photographer-container {
+    bottom: clamp(70px, 12vh, 100px);
+    font-size: clamp(9px, 1.8vh, 12px);
+  }
+  
+  .cta-container {
+    bottom: clamp(20px, 4vh, 40px);
   }
 }
 
@@ -296,24 +331,37 @@
 
 /* Landscape mobile adjustments */
 @media screen and (max-height: 500px) and (orientation: landscape) {
+  .content-window {
+    padding-top: clamp(10px, 3vh, 20px);
+    padding-bottom: clamp(60px, 15vh, 90px);
+  }
+  
   .monospace {
-    font-size: clamp(9px, 1.4vh, 12px);
-    line-height: 1.2;
-    padding: clamp(2px, 0.5vh, 6px) clamp(4px, 1vw, 8px);
+    font-size: clamp(10px, 2vh, 14px);
+    line-height: 1.25;
+    padding: clamp(4px, 1vh, 8px) clamp(6px, 2vw, 12px);
   }
-
+  
   .stanza {
-    margin-bottom: clamp(4px, 0.8vh, 8px);
-  }
-
-  .content-container {
-    padding-bottom: clamp(50px, 12vh, 80px);
+    margin-bottom: clamp(6px, 1.5vh, 12px);
   }
 
   .author-container,
   .photographer-container,
   .cta-container {
-    bottom: clamp(4px, 1vh, 8px);
+    bottom: clamp(8px, 2vh, 16px);
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .App {
+    height: -webkit-fill-available;
+  }
+  
+  .content-container {
+    height: -webkit-fill-available;
+    max-height: -webkit-fill-available;
   }
 }
 
@@ -341,7 +389,13 @@
 /* Ensure no text overflow on very small screens */
 @media screen and (max-width: 320px) {
   .monospace {
-    font-size: clamp(9px, 1.3vh, 11px);
+    font-size: clamp(10px, 2vh, 13px);
     word-break: break-word;
+    line-height: 1.3;
+  }
+  
+  .content-window {
+    padding-top: clamp(25px, 6vh, 45px);
+    padding-bottom: clamp(90px, 18vh, 130px);
   }
 }

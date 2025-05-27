@@ -108,13 +108,13 @@
     height: 100dvh;
     /* Minimal safe area padding */
     padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 90px); /* Increased for credit boxes */
+    padding-bottom: env(safe-area-inset-bottom, 70px); /* Reduced for single credits line */
   }
   
   .content-window {
     /* Further reduce margins to prevent word overflow */
     padding-top: clamp(4px, 1vh, 8px);
-    padding-bottom: clamp(70px, 12vh, 90px); /* Increased for credit boxes */
+    padding-bottom: clamp(60px, 10vh, 75px); /* Reduced for single credits line */
     padding-left: clamp(4px, 1vw, 8px);
     padding-right: clamp(4px, 1vw, 8px);
   }
@@ -145,35 +145,15 @@
     margin-bottom: clamp(5px, 1vh, 10px); /* Options: 3-6px (tight), 5-10px (current), 8-15px (loose) */
   }
   
-  /* FIXED: Stacked credit boxes with consistent width */
-  .author-container,
-  .photographer-container {
-    left: 50%;
-    transform: translateX(-50%); /* Center horizontally */
-    width: clamp(160px, 25vw, 200px); /* Fixed width for visual consistency */
-    max-width: calc(100vw - 16px); /* Prevent overflow */
-    text-align: center;
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden; /* Hide overflow if text is too long */
-    text-overflow: ellipsis; /* Add ellipsis for very long text */
-  }
-  
-  .author-container {
-    bottom: clamp(45px, 7vh, 65px); /* Moved higher */
-  }
-  
-  .photographer-container {
-    bottom: clamp(25px, 4vh, 35px); /* Below author */
-  }
-  
-  .author-container,
-  .photographer-container {
+  /* Combined credits for mobile */
+  .credits-container {
+    bottom: clamp(35px, 5vh, 45px); /* Above CTA button */
     font-size: clamp(7px, 1.2vh, 9px);
     padding: clamp(2px, 0.4vh, 4px) clamp(4px, 0.8vw, 6px);
   }
   
   .cta-container {
-    bottom: clamp(5px, 1vh, 10px); /* Moved down to accommodate stacked credits */
+    bottom: clamp(5px, 1vh, 10px); /* Moved down */
   }
   
   .cta-button {
@@ -314,32 +294,29 @@
   max-width: 100%;
 }
 
-/* Credits containers - Responsive positioning */
-.author-container,
-.photographer-container {
+/* Combined Credits Container - Responsive positioning */
+.credits-container {
   position: fixed;
-  bottom: clamp(8px, 1.5vh, 16px);
-  padding: clamp(4px, 0.8vh, 8px) clamp(6px, 1.2vw, 12px);
+  left: 50%;
+  bottom: clamp(45px, 6vh, 60px); /* Above the CTA button */
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+  padding: clamp(4px, 0.8vh, 8px) clamp(8px, 1.5vw, 16px);
   font-size: clamp(10px, 0.8rem, 13px);
   color: #000;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 3px;
-  z-index: 10;
   transition: all 0.2s ease;
+  max-width: calc(100vw - 16px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.author-container {
-  left: clamp(8px, 1.5vw, 16px);
-}
-
-.photographer-container {
-  right: clamp(8px, 1.5vw, 16px);
-}
-
-.author-container:hover,
-.photographer-container:hover {
+.credits-container:hover {
   background-color: rgba(255, 255, 255, 0.9);
-  transform: translateY(-1px);
+  transform: translateX(-50%) translateY(-1px);
 }
 
 /* CTA Button - Responsive sizing */
@@ -377,7 +354,7 @@
 @media screen and (max-height: 500px) and (orientation: landscape) and (max-width: 480px) {
   .content-window {
     padding-top: clamp(2px, 0.6vh, 4px);
-    padding-bottom: clamp(40px, 8vh, 55px); /* Increased for stacked credits */
+    padding-bottom: clamp(35px, 7vh, 50px); /* Reduced for single credits line */
     padding-left: clamp(4px, 1vw, 8px);
     padding-right: clamp(4px, 1vw, 8px);
   }
@@ -398,33 +375,15 @@
     margin-bottom: clamp(2px, 0.5vh, 4px);
   }
 
-  /* FIXED: Stacked credits for landscape mobile */
-  .author-container {
-    bottom: clamp(15px, 3vh, 20px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: clamp(120px, 20vw, 160px); /* Consistent width for landscape */
+  /* Combined credits for landscape mobile */
+  .credits-container {
+    bottom: clamp(20px, 3.5vh, 25px); /* Above CTA button */
     font-size: clamp(5px, 1.1vh, 7px);
     padding: clamp(1px, 0.2vh, 2px) clamp(2px, 0.4vw, 3px);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .photographer-container {
-    bottom: clamp(5px, 1.5vh, 8px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: clamp(120px, 20vw, 160px); /* Consistent width for landscape */
-    font-size: clamp(5px, 1.1vh, 7px);
-    padding: clamp(1px, 0.2vh, 2px) clamp(2px, 0.4vw, 3px);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
   
   .cta-container {
-    bottom: clamp(25px, 4vh, 30px); /* Moved up to avoid overlap */
+    bottom: clamp(3px, 1vh, 6px);
   }
   
   .cta-button {
@@ -469,13 +428,13 @@
 /* Ensure no text overflow on very small screens */
 @media screen and (max-width: 320px) {
   .content-container {
-    padding-bottom: env(safe-area-inset-bottom, 100px); /* More space for stacked credits */
+    padding-bottom: env(safe-area-inset-bottom, 80px); /* Reduced for single credits line */
   }
   
   .content-window {
     /* Ultra-minimal margins for tiny screens */
     padding-top: clamp(3px, 0.8vh, 6px);
-    padding-bottom: clamp(80px, 15vh, 100px); /* Increased for stacked credits */
+    padding-bottom: clamp(60px, 12vh, 80px); /* Reduced for single credits line */
     padding-left: clamp(3px, 0.8vw, 6px);
     padding-right: clamp(3px, 0.8vw, 6px);
   }
@@ -498,29 +457,11 @@
     margin-bottom: clamp(3px, 0.6vh, 6px);
   }
   
-  /* FIXED: Stacked credits for very small screens */
-  .author-container {
-    bottom: clamp(55px, 8vh, 70px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: clamp(140px, 22vw, 180px); /* Consistent width for tiny screens */
+  /* Combined credits for very small screens */
+  .credits-container {
+    bottom: clamp(30px, 5vh, 40px); /* Above CTA button */
     font-size: clamp(6px, 1vh, 8px);
     padding: clamp(1px, 0.3vh, 3px) clamp(3px, 0.6vw, 5px);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .photographer-container {
-    bottom: clamp(35px, 5vh, 45px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: clamp(140px, 22vw, 180px); /* Consistent width for tiny screens */
-    font-size: clamp(6px, 1vh, 8px);
-    padding: clamp(1px, 0.3vh, 3px) clamp(3px, 0.6vw, 5px);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
   
   .cta-container {

@@ -130,6 +130,17 @@ const App = () => {
   const bubbleRef = useRef();
   const [highlightedLine, setHighlightedLine] = useState(null);
 
+  // Helper function to classify emissions intensity
+  const getEmissionsIntensity = (carbonFootprint) => {
+    const match = carbonFootprint.match(/[\d,]+\.?\d*/);
+    if (!match) return 'normal';
+    
+    const emissions = parseFloat(match[0].replace(/,/g, ''));
+    const highEmissionThreshold = 1500000;
+    
+    return emissions > highEmissionThreshold ? 'high' : 'normal';
+  };
+
   useEffect(() => {
     if (
       selectedAirport &&
@@ -300,7 +311,10 @@ const App = () => {
                 </div>
               )}
               {selectedLineData && (
-                <div className="line-data-window info-window line-data-window-custom">
+                <div 
+                  className="line-data-window info-window line-data-window-custom"
+                  data-high-emissions={getEmissionsIntensity(selectedLineData["carbon-footprint"]) === 'high'}
+                >
                   <div className="line-data">
                     <div className="itinerary">
                       <strong>{selectedLineData.itinerary}</strong>

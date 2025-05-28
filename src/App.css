@@ -504,3 +504,118 @@
     bottom: clamp(8px, 1.5vh, 12px); /* Exact same height as credits */
   }
 }
+
+/* Museum-quality line data display enhancement */
+
+/* Enhanced line data window with archival/scientific aesthetic */
+.line-data-window-custom {
+  background-color: rgba(252, 252, 252, 0.97) !important;
+  border: none !important;
+  border-left: 3px solid #2c2c2c !important;
+  border-radius: 2px !important;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  backdrop-filter: blur(8px);
+  
+  /* Typography improvements */
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  font-size: clamp(11px, 0.9rem, 14px);
+  line-height: 1.45;
+  
+  /* Layout refinements */
+  padding: clamp(16px, 2vh, 24px) clamp(18px, 2.5vw, 28px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: clamp(12px, 1.5vh, 18px);
+  text-align: left;
+  
+  /* Refined dimensions */
+  width: clamp(240px, 32vw, 320px);
+  min-height: clamp(160px, 25vh, 220px);
+  max-width: 85vw; /* Ensure mobile compatibility */
+}
+
+/* Itinerary styling - monospace for technical precision */
+.line-data-window-custom .itinerary {
+  font-family: 'Courier New', 'Monaco', monospace !important;
+  font-size: clamp(10px, 0.85rem, 13px);
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+  word-break: break-all; /* Allow breaking at hyphens for long routes */
+  margin-bottom: clamp(4px, 0.5vh, 8px);
+  padding-bottom: clamp(8px, 1vh, 12px);
+  border-bottom: 1px solid rgba(44, 44, 44, 0.15);
+}
+
+/* Distance measurement - emphasize the scale */
+.line-data-window-custom .length {
+  font-weight: 400;
+  color: #333;
+  margin: 0;
+  padding: clamp(4px, 0.5vh, 6px) 0;
+}
+
+.line-data-window-custom .length strong {
+  font-weight: 600;
+  color: #2c2c2c;
+}
+
+/* Carbon footprint - let the numbers carry weight */
+.line-data-window-custom .carbon-footprint {
+  font-weight: 400;
+  color: #444;
+  margin: 0;
+  padding: clamp(4px, 0.5vh, 6px) 0 0 0;
+  border-top: 1px solid rgba(44, 44, 44, 0.1);
+  padding-top: clamp(8px, 1vh, 12px);
+}
+
+.line-data-window-custom .carbon-footprint strong {
+  font-weight: 600;
+  color: #2c2c2c;
+}
+
+/* Subtle emphasis for high-impact routes */
+.line-data-window-custom[data-high-emissions="true"] {
+  border-left-color: #8b4513;
+}
+
+.line-data-window-custom[data-high-emissions="true"] .carbon-footprint {
+  color: #654321;
+}
+
+.line-data-window-custom[data-high-emissions="true"] .carbon-footprint strong {
+  color: #5d3a1a;
+}
+
+/* Mobile refinements */
+@media screen and (max-width: 480px) {
+  .line-data-window-custom {
+    width: clamp(200px, 85vw, 280px);
+    padding: clamp(12px, 1.5vh, 18px) clamp(14px, 2vw, 20px);
+    gap: clamp(8px, 1vh, 12px);
+    min-height: clamp(140px, 20vh, 180px);
+  }
+  
+  .line-data-window-custom .itinerary {
+    font-size: clamp(9px, 0.75rem, 11px);
+    letter-spacing: 0.3px;
+  }
+}
+
+/* High-resolution display optimizations */
+@media screen and (min-resolution: 2dppx) {
+  .line-data-window-custom {
+    border-left-width: 2px;
+  }
+  
+  .line-data-window-custom .itinerary,
+  .line-data-window-custom .length strong,
+  .line-data-window-custom .carbon-footprint strong {
+    font-weight: 500; /* Slightly reduce weight on high-DPI for better rendering */
+  }
+}

@@ -83,7 +83,7 @@ const findAirportByCode = (code) => {
 
 const App = () => {
   // Get the Google API key from environment variables
-  const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+  // const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
 
   const [bubbleStyle, setBubbleStyle] = useState({
     top: "-1000px",
@@ -145,12 +145,21 @@ const App = () => {
   };
 
   // Helper function to get secure map URL
+// Helper function to get secure map URL
   const getSecureMapUrl = (airport) => {
-    if (!airport || !airport.static_map_url || !GOOGLE_API_KEY) {
+    if (!airport || !airport.lat || !airport.lon) {
       return null;
     }
-    // Replace placeholder with actual API key
-    return airport.static_map_url.replace('{API_KEY}', GOOGLE_API_KEY);
+    
+    // Use your Netlify function instead of direct Google Maps API
+    const params = new URLSearchParams({
+      center: `${airport.lat},${airport.lon}`,
+      zoom: '6',
+      size: '600x400',
+      maptype: 'roadmap'
+    });
+    
+    return `/.netlify/functions/maps?${params.toString()}`;
   };
 
   useEffect(() => {

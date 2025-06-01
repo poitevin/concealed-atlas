@@ -540,12 +540,19 @@
 /* Itinerary styling - monospace for technical precision */
 .line-data-window-custom .itinerary {
   font-family: 'Courier New', 'Monaco', monospace !important;
-  font-size: clamp(10px, 0.85rem, 13px);
+  font-size: clamp(9px, 0.8rem, 12px);
   font-weight: 600;
   color: #1a1a1a;
-  letter-spacing: 0.5px;
-  line-height: 1.3;
-  word-break: break-all; /* Allow breaking at hyphens for long routes */
+  letter-spacing: 0.3px;
+  line-height: 1.25;
+  /* Prevent breaking airport codes - only break at hyphens */
+  word-break: normal;
+  overflow-wrap: normal;
+  white-space: normal;
+  /* Allow horizontal scroll if needed rather than breaking codes */
+  overflow-x: auto;
+  /* Ensure codes stay together by breaking only at natural word boundaries (hyphens) */
+  hyphens: manual;
   margin-bottom: clamp(4px, 0.5vh, 8px);
   padding-bottom: clamp(8px, 1vh, 12px);
   border-bottom: 1px solid rgba(44, 44, 44, 0.15);
@@ -595,15 +602,20 @@
 /* Mobile refinements */
 @media screen and (max-width: 480px) {
   .line-data-window-custom {
-    width: clamp(200px, 85vw, 280px);
+    width: clamp(220px, 90vw, 300px);
     padding: clamp(12px, 1.5vh, 18px) clamp(14px, 2vw, 20px);
     gap: clamp(8px, 1vh, 12px);
     min-height: clamp(140px, 20vh, 180px);
   }
   
   .line-data-window-custom .itinerary {
-    font-size: clamp(9px, 0.75rem, 11px);
-    letter-spacing: 0.3px;
+    font-size: clamp(8px, 0.7rem, 10px);
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+    /* Ensure mobile doesn't break codes either */
+    word-break: normal;
+    overflow-wrap: normal;
+    overflow-x: auto;
   }
 }
 

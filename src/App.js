@@ -82,13 +82,7 @@ const findAirportByCode = (code) => {
 };
 
 const App = () => {
-  // Get the Google API key from environment variables
-  // const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-
-  const [bubbleStyle, setBubbleStyle] = useState({
-    top: "-1000px",
-    left: "-1000px",
-  });
+  const [bubbleStyle, setBubbleStyle] = useState({ top: "-1000px", left: "-1000px" });
 
   const setBubblePosition = (rect, type) => {
     const contentRect = displayRef.current.getBoundingClientRect();
@@ -102,25 +96,19 @@ const App = () => {
     const maxHorizontalSpace = Math.max(AL, AR);
     const maxVerticalSpace = Math.max(AT, AB);
 
-    const bubbleStyle = {
-      display: "block",
-    };
+    const bubbleStyle = { display: "block" };
 
     if (type === "line") {
       bubbleStyle.left = rect.left + (rect.width - infoBubbleRect.width) / 2;
     } else {
-      if (maxHorizontalSpace === AL) {
-        bubbleStyle.left = rect.left - infoBubbleRect.width;
-      } else {
-        bubbleStyle.left = rect.right;
-      }
+      bubbleStyle.left = (maxHorizontalSpace === AL)
+        ? rect.left - infoBubbleRect.width
+        : rect.right;
     }
 
-    if (maxVerticalSpace === AT) {
-      bubbleStyle.top = rect.top - infoBubbleRect.height;
-    } else {
-      bubbleStyle.top = rect.bottom;
-    }
+    bubbleStyle.top = (maxVerticalSpace === AT)
+      ? rect.top - infoBubbleRect.height
+      : rect.bottom;
 
     setBubbleStyle(bubbleStyle);
   };
@@ -133,42 +121,29 @@ const App = () => {
   const bubbleRef = useRef();
   const [highlightedLine, setHighlightedLine] = useState(null);
 
-  // Helper function to classify emissions intensity
+  // classify emissions (optional styling hook)
   const getEmissionsIntensity = (carbonFootprint) => {
     const match = carbonFootprint.match(/[\d,]+\.?\d*/);
-    if (!match) return 'normal';
-    
-    const emissions = parseFloat(match[0].replace(/,/g, ''));
+    if (!match) return "normal";
+    const emissions = parseFloat(match[0].replace(/,/g, ""));
     const highEmissionThreshold = 1500000;
-    
-    return emissions > highEmissionThreshold ? 'high' : 'normal';
+    return emissions > highEmissionThreshold ? "high" : "normal";
   };
 
-  // Helper function to get secure map URL
-// Helper function to get secure map URL
+  // Static map via proxy
   const getSecureMapUrl = (airport) => {
-    if (!airport || !airport.lat || !airport.lon) {
-      return null;
-    }
-    
-    // Use your Netlify function instead of direct Google Maps API
+    if (!airport || !airport.lat || !airport.lon) return null;
     const params = new URLSearchParams({
       center: `${airport.lat},${airport.lon}`,
-      zoom: '6',
-      size: '600x400',
-      maptype: 'roadmap'
+      zoom: "6",
+      size: "600x400",
+      maptype: "roadmap",
     });
-    
     return `/.netlify/functions/maps?${params.toString()}`;
   };
 
   useEffect(() => {
-    if (
-      selectedAirport &&
-      selectedCode &&
-      bubbleRef.current &&
-      displayRef.current
-    ) {
+    if (selectedAirport && selectedCode && bubbleRef.current && displayRef.current) {
       const codeTarget = document.querySelector(`.code.selected-code`);
       if (codeTarget) {
         const rect = codeTarget.getBoundingClientRect();
@@ -189,7 +164,6 @@ const App = () => {
 
   const handleLineClick = (event, globalLineIndex) => {
     event.stopPropagation();
-
     if (linesData[globalLineIndex]) {
       setSelectedLineData(linesData[globalLineIndex]);
       setHighlightedLine(globalLineIndex);
@@ -199,7 +173,8 @@ const App = () => {
   };
 
   const handleClick = (event) => {
-    if (event.target.classList.contains("poem-text")) {
+    // 🚫 In poem mode, do NOT open line info bubbles:
+    if (event.target.classList.contains("poem-text") && !displayPoem) {
       const lineElement = event.target.closest(".poem-line");
       if (lineElement) {
         handleLineClick(event, parseInt(lineElement.dataset.index, 10));
@@ -242,13 +217,12 @@ const App = () => {
         <div className="credits-container">
           <span className="credits-text">Poem: Pedro Poitevin | Photo: Arturo Godoy</span>
         </div>
+
         <div
           className={`content-window${
-            selectedAirport
-              ? " selected-airport"
-              : selectedLineData
-              ? " selected-line-data"
-              : ""
+            selectedAirport ? " selected-airport"
+            : selectedLineData ? " selected-line-data"
+            : ""
           }`}
         >
           <div className="content-window">
@@ -264,9 +238,7 @@ const App = () => {
                               key={currentLineIndex}
                               data-index={currentLineIndex}
                               className={`poem-line ${
-                                highlightedLine === currentLineIndex
-                                  ? "highlighted-line"
-                                  : ""
+                                highlightedLine === currentLineIndex ? "highlighted-line" : ""
                               }`}
                             >
                               <div className="poem-text-container">
@@ -282,18 +254,12 @@ const App = () => {
                         {stanza.split("\n").map((line, lineIndex) => (
                           <div
                             key={`${stanzaIndex}-${lineIndex}`}
-                            className={
-                              lineIndex === 0 ? "airport-codes-title" : ""
-                            }
+                            className={lineIndex === 0 ? "airport-codes-title" : ""}
                           >
                             {line.split("-").map((code, idx) => (
                               <React.Fragment key={idx}>
                                 <span
-                                  className={`code${
-                                    selectedCode === code
-                                      ? " selected-code"
-                                      : ""
-                                  }`}
+                                  className={`code${selectedCode === code ? " selected-code" : ""}`}
                                 >
                                   {code}
                                 </span>
@@ -306,16 +272,15 @@ const App = () => {
                     ))}
               </div>
             </div>
+
             <div
               ref={bubbleRef}
               className={`info-bubble${
-                selectedAirport || selectedLineData ? " show-info" : ""
+                (selectedAirport || (selectedLineData && !displayPoem)) ? " show-info" : ""
               }`}
               style={{
                 ...bubbleStyle,
-                backgroundImage: selectedAirport
-                  ? `url(${getSecureMapUrl(selectedAirport)})`
-                  : "none",
+                backgroundImage: selectedAirport ? `url(${getSecureMapUrl(selectedAirport)})` : "none",
                 backgroundSize: selectedAirport ? "cover" : "none",
               }}
             >
@@ -331,10 +296,12 @@ const App = () => {
                   </div>
                 </div>
               )}
+
+              {/* Only show per-line info bubble in Poem view */}
               {selectedLineData && (
-                <div 
+                <div
                   className="line-data-window info-window line-data-window-custom"
-                  data-high-emissions={getEmissionsIntensity(selectedLineData["carbon-footprint"]) === 'high'}
+                  data-high-emissions={getEmissionsIntensity(selectedLineData["carbon-footprint"]) === "high"}
                 >
                   <div className="line-data">
                     <div className="itinerary">
@@ -354,6 +321,7 @@ const App = () => {
             </div>
           </div>
         </div>
+
         <div className="cta-container">
           <button className="cta-button">Tap Anywhere to Explore</button>
         </div>

@@ -17,9 +17,9 @@
   position: relative;
 }
 
-/* Frosted glass overlay */
+/* Frosted glass overlay — "the glass is blurry, streaked" */
 .App::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   background: rgba(255, 255, 255, 0.55);
@@ -123,15 +123,8 @@
     /* Larger margins for desktop breathing room */
     padding-left: clamp(24px, 4vw, 60px);
     padding-top: clamp(12px, 2vh, 30px);
-    /* Larger text while keeping full poem visible */
-    font-size: clamp(14px, 1.75vh, 18px);
-    /* Looser leading for readability */
-    line-height: 1.4;
-  }
-  
-  .stanza {
-    /* Reduced stanza spacing for desktop */
-    margin-bottom: clamp(6px, 1vh, 14px);
+    /* Original larger font for shorter poem */
+    font-size: clamp(14px, 1.8vh, 18px);
   }
   
   .content-container {
@@ -208,7 +201,7 @@
   
   .stanza {
     /* INTERSTANZAIC LEADING CONTROL: Adjust this value to change stanza spacing */
-    margin-bottom: clamp(5px, 1vh, 10px); /* Options: 3-6px (tight), 5-10px (current), 8-15px (loose) */
+    margin-bottom: clamp(8px, 1.2vh, 15px); /* Options: 3-6px (tight), 5-10px (current), 8-15px (loose) */
   }
   
   /* Combined credits for mobile - left corner, two-line layout */
@@ -237,7 +230,7 @@
 }
 
 .stanza {
-  margin-bottom: clamp(8px, 1.2vh, 18px);
+  margin-bottom: clamp(18px, 1.5vh, 48px);
 }
 
 .poem-title-stanza {

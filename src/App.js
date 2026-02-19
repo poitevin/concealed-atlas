@@ -3,6 +3,11 @@ import "./App.css";
 import airportData from "./airportData.json";
 import linesData from "./linesData.json";
 
+// Toggle this off to disable fade transition between poem and codes.
+const ENABLE_FADE_TRANSITION = true;
+const FADE_OUT_DURATION = 220; // milliseconds
+const FADE_IN_DURATION = 260; // milliseconds
+
 const airportCodes = `CON-CEA-LED-ATL-ASO-FOU-RAP-PRO-ACH-ING-DEM-ISE
 
 INT-HED-IST-ORT-EDW-ORL-DTR-UTH-ISJ-UST-AMO-MEN-TOF-IMP-OST-URE
@@ -83,6 +88,7 @@ const findAirportByCode = (code) => {
 
 const App = () => {
   const [bubbleStyle, setBubbleStyle] = useState({ top: "-1000px", left: "-1000px" });
+  const transitionTimeoutRef = useRef(null);
 
   const setBubblePosition = (rect, type) => {
     const contentRect = displayRef.current.getBoundingClientRect();
@@ -96,7 +102,7 @@ const App = () => {
     const maxHorizontalSpace = Math.max(AL, AR);
     const maxVerticalSpace = Math.max(AT, AB);
 
-    const bubbleStyle = { display: "block" };
+    const bubbleStyle = {};
 
     if (type === "line") {
       bubbleStyle.left = rect.left + (rect.width - infoBubbleRect.width) / 2;
@@ -115,6 +121,7 @@ const App = () => {
 
   const [selectedAirport, setSelectedAirport] = useState(null);
   const [displayPoem, setDisplayPoem] = useState(true);
+  const [transitionPhase, setTransitionPhase] = useState("idle");
   const displayRef = useRef();
   const [selectedLineData, setSelectedLineData] = useState(null);
   const [selectedCode, setSelectedCode] = useState(null);
@@ -138,6 +145,7 @@ const App = () => {
       zoom: "6",
       size: "600x400",
       maptype: "roadmap",
+      markers: `color:red|${airport.lat},${airport.lon}`,
     });
     return `/.netlify/functions/maps?${params.toString()}`;
   };
@@ -162,6 +170,32 @@ const App = () => {
     }
   }, [selectedLineData]);
 
+  useEffect(() => {
+    return () => {
+      if (transitionTimeoutRef.current) {
+        clearTimeout(transitionTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const toggleDisplayMode = () => {
+    if (!ENABLE_FADE_TRANSITION) {
+      setDisplayPoem((prev) => !prev);
+      return;
+    }
+
+    if (transitionPhase !== "idle") return;
+
+    setTransitionPhase("out");
+    transitionTimeoutRef.current = setTimeout(() => {
+      setDisplayPoem((prev) => !prev);
+      setTransitionPhase("in");
+      transitionTimeoutRef.current = setTimeout(() => {
+        setTransitionPhase("idle");
+      }, FADE_IN_DURATION);
+    }, FADE_OUT_DURATION);
+  };
+
   const handleLineClick = (event, globalLineIndex) => {
     event.stopPropagation();
     if (linesData[globalLineIndex]) {
@@ -173,8 +207,8 @@ const App = () => {
   };
 
   const handleClick = (event) => {
-    // 🚫 In poem mode, do NOT open line info bubbles:
-    if (event.target.classList.contains("poem-text") && !displayPoem) {
+    // In poem mode, open line info bubbles.
+    if (event.target.classList.contains("poem-text") && displayPoem) {
       const lineElement = event.target.closest(".poem-line");
       if (lineElement) {
         handleLineClick(event, parseInt(lineElement.dataset.index, 10));
@@ -198,7 +232,7 @@ const App = () => {
 
     if (!event.target.closest(".info-bubble")) {
       if (!selectedAirport && !selectedLineData) {
-        setDisplayPoem(!displayPoem);
+        toggleDisplayMode();
       } else {
         setSelectedAirport(null);
         setSelectedLineData(null);
@@ -227,10 +261,13 @@ const App = () => {
         >
           <div className="content-window">
             <div className="responsive-container">
-              <div className="monospace">
+              <div className={`monospace transition-${transitionPhase}`}>
                 {displayPoem
                   ? poem.split("\n\n").map((stanza, stanzaIndex) => (
-                      <div key={stanzaIndex} className="stanza">
+                      <div
+                        key={stanzaIndex}
+                        className={`stanza${stanzaIndex === 0 ? " poem-title-stanza" : ""}`}
+                      >
                         {stanza.split("\n").map((line) => {
                           const currentLineIndex = globalLineIndex++;
                           return (
@@ -242,7 +279,13 @@ const App = () => {
                               }`}
                             >
                               <div className="poem-text-container">
-                                <span className="poem-text">{line}</span>
+                                <span
+                                  className={`poem-text${
+                                    stanzaIndex === 0 ? " poem-title-text" : ""
+                                  }`}
+                                >
+                                  {line}
+                                </span>
                               </div>
                             </div>
                           );
@@ -276,7 +319,7 @@ const App = () => {
             <div
               ref={bubbleRef}
               className={`info-bubble${
-                (selectedAirport || (selectedLineData && !displayPoem)) ? " show-info" : ""
+                (selectedAirport || (selectedLineData && displayPoem)) ? " show-info" : ""
               }`}
               style={{
                 ...bubbleStyle,
